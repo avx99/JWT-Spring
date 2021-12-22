@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class AppUserServiceImpl implements AppUserService{
+	
 	@Autowired
 	private AppUserRepository appUserRepository;
 	@Autowired
@@ -31,19 +32,20 @@ public class AppUserServiceImpl implements AppUserService{
 
 	@Override
 	public Role saveRole(Role role) {
+		log.info("saving new Role {} to db",role);
 		return this.roleRepository.save(role);
 	}
 
 	@Override
 	public void addRoleToUser(String username, String roleName) {
-		AppUser user = this.appUserRepository.findByUserName(username);
+		AppUser user = this.appUserRepository.findByUsername(username);
 		Role role = this.roleRepository.findByName(roleName);
 		user.getRoles().add(role);
 	}
 
 	@Override
 	public AppUser getUser(String username) {
-		return this.appUserRepository.findByUserName(username);
+		return this.appUserRepository.findByUsername(username);
 	}
 
 	@Override
